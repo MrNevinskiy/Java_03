@@ -16,17 +16,15 @@ public class Cat {
         appetite = MIN_APPETITE + rnd.nextInt((MAX_APPETITE - MIN_APPETITE));
     }
 
-    public boolean eat(Plate plate){
+    public void eat(Plate plate){
         if(plate.isFoodEnough(appetite) && !satiety){
             plate.decreaseFood(appetite);
             satiety = true;
-            return true;
         }
-        return false;
     }
 
     public boolean isSatiety() {
-        return satiety;
+        return !satiety;
     }
 
     @Override

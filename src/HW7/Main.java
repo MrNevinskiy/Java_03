@@ -10,16 +10,16 @@ public class Main {
             cats[i] = new Cat();
             System.out.println("_____________________________________");
             plate.infoFeed();
-            System.out.println(cats[i] + " Кот голодный? " + !cats[i].isSatiety());
+            System.out.println(cats[i] + " Кот сытый? " + !cats[i].isSatiety());
             cats[i].eat(plate);
             plate.infoFeed();
-            if(!cats[i].isSatiety()){
+            if(cats[i].isSatiety()){
                 System.out.println("Добавим немного еды.");
                 plate.addFood(30);
                 plate.infoFeed();
                 cats[i].eat(plate);
             }
-            System.out.println(cats[i] + " Кот голодный? " + !cats[i].isSatiety());
+            System.out.println(cats[i] + " Кот сытый? " + !cats[i].isSatiety());
         }
     }
 }
