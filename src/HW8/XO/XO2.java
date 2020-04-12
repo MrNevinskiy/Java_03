@@ -8,7 +8,6 @@ public class XO2 extends JFrame {
     private final ImageIcon imageX = new ImageIcon("src/HW8/XO/x.jpg");
     private final ImageIcon imageO = new ImageIcon("src/HW8/XO/o.jpg");
     private final ImageIcon imageEmpty = new ImageIcon("src/HW8/XO/empty.jpg");
-    private int cnt = 0;
 
     public XO2() throws HeadlessException {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -25,19 +24,18 @@ public class XO2 extends JFrame {
                 copy.addActionListener(action -> {
                     copy.setIcon(imageX);
                     copy.setEnabled(false);
-                    cnt++;
                     copy.setDisabledIcon(imageX);
                     movePC(buttons);
+                    if (isDraw(buttons, imageEmpty)) {
+                        String text = "Ничья";
+                        alert(text);
+                    }
                     if (isVictory(buttons, imageX)) {
                         String text = "Победа";
                         alert(text);
                     }
                     if (isVictory(buttons, imageO)) {
                         String text = "Поражение";
-                        alert(text);
-                    }
-                    if (cnt == 9) {
-                        String text = "Ничья";
                         alert(text);
                     }
                 });
@@ -82,11 +80,11 @@ public class XO2 extends JFrame {
             isRow = isCol = true;
 
             for (int i = 0; i < 3; i++) {
-                isRow = (buttons[diag][i].equals(dot)) && isRow;
-                isCol = (buttons[i][diag].equals(dot))&& isCol;
+                isRow = (buttons[diag][i].getIcon() == dot) && isRow;
+                isCol = (buttons[i][diag].getIcon() == dot)&& isCol;
                 if (i == diag) {
-                    isCheckedDiagB = (buttons[diag][diag].equals(dot)) && isCheckedDiagB;
-                    isCheckedDiagS = (buttons[diag][2 - diag].equals(dot)) && isCheckedDiagS;
+                    isCheckedDiagB = (buttons[diag][diag].getIcon() == dot) && isCheckedDiagB;
+                    isCheckedDiagS = (buttons[diag][2 - diag].getIcon() == dot) && isCheckedDiagS;
                 }
             }
 
@@ -98,6 +96,16 @@ public class XO2 extends JFrame {
         return false;
     }
 
+    private boolean isDraw(JButton[][] buttons, ImageIcon dot) {
+        for (int i = 0; i < buttons.length ; i++) {
+            for (int j = 0; j < buttons.length ; j++) {
+                if (buttons[i][j].getIcon() == dot){
+                    return false;
+                }
+            }
+        }return true;
+    }
+
     private void movePC(JButton[][] buttons) {
         int random = (int)(Math.random() * 3);
         for (int i = random; i < 3; i++) {
@@ -106,7 +114,6 @@ public class XO2 extends JFrame {
                     buttons[i][j].setIcon(imageO);
                     buttons[i][j].setEnabled(false);
                     buttons[i][j].setDisabledIcon(imageO);
-                    cnt++;
                     return;
                 }
             }
